@@ -6,4 +6,3 @@ dist/
 *.local
 *.log
 .env
-public/
