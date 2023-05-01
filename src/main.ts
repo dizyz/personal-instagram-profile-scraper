@@ -2,10 +2,17 @@ import Puppeteer from "puppeteer";
 import * as FS from "fs-extra";
 import { PUBLIC_DIR } from "./@paths";
 import { fetchInstagramPhotos } from "./@instagram";
+import { fetchInstagramMedia } from "./@instagram-rapid-ai";
 
 (async () => {
   // Prepare public folder if not exists
   await FS.ensureDir(PUBLIC_DIR);
+
+  try {
+    await fetchInstagramMedia();
+  } catch (e) {
+    console.error("Failed to fetch Instagram media: ", e);
+  }
 
   const browser = await Puppeteer.launch();
 
