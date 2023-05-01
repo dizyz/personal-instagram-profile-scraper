@@ -10,7 +10,7 @@ const RAPID_HOST = "instagram28.p.rapidapi.com";
 const RAPID_API_ENDPOINT = `https://${RAPID_HOST}`;
 
 const RAPID_API_JSON_URL =
-  "https://dizyz.github.io/personal-instagram-profile-scraper/instagram-rapid-api.json";
+  "https://dizyz.github.io/personal-scraper/instagram-rapid-api.json";
 
 async function getProfileData() {
   const options = {
