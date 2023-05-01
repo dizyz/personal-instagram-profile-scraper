@@ -39,6 +39,8 @@ jobs:
       - name: Run script
         run: |
           yarn start
+        env:
+          RAPID_API_KEY: ${{ secrets.RAPID_API_KEY }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
