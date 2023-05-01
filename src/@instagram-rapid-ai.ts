@@ -9,6 +9,9 @@ const INSTAGRAM_USER_ID = 56257652623;
 const RAPID_HOST = "instagram28.p.rapidapi.com";
 const RAPID_API_ENDPOINT = `https://${RAPID_HOST}`;
 
+const RAPID_API_JSON_URL =
+  "https://dizyz.github.io/personal-instagram-profile-scraper/instagram-rapid-api.json";
+
 async function getProfileData() {
   const options = {
     method: "GET",
@@ -45,13 +48,22 @@ async function getMediaData() {
 }
 
 export async function fetchInstagramMedia() {
-  const profileData = await getProfileData();
-  const mediasData = await getMediaData();
-
-  const data = {
-    profile: profileData,
-    medias: mediasData,
-  };
+  let data = undefined;
+  try {
+    const profileData = await getProfileData();
+    const mediasData = await getMediaData();
+    data = {
+      profile: profileData,
+      medias: mediasData,
+    };
+  } catch (e) {
+    console.error("Failed to fetch Instagram data: ", e);
+    console.info("Falling back to last json data from page.");
+  }
+  if (!data) {
+    const response = await Axios.get(RAPID_API_JSON_URL);
+    data = response.data;
+  }
 
   await FS.writeJSON(INSTAGRAM_RAPID_API_JSON_PATH, data, {
     spaces: 2,
