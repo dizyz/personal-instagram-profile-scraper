@@ -51,6 +51,7 @@ async function getMediaData() {
 export async function fetchInstagramMedia() {
   let data = undefined;
   try {
+    throw new Error("by pass rapid api");
     const profileData = await getProfileData();
     const mediasData = await getMediaData();
     data = {

@@ -1,4 +1,6 @@
 import fetch from "isomorphic-unfetch";
+import url from "url";
+import path from "path";
 
 export async function convertExternalImageUrlToBase64Url(
   externalUrl: string,
@@ -54,8 +56,19 @@ export async function convertImageUrlsInData(data: any): Promise<any> {
   }
 
   if (typeof data === "string") {
-    if (data.startsWith("http") && data.endsWith(".jpg")) {
-      return convertExternalImageUrlToBase64Url(data);
+    if (data.startsWith("http://") || data.startsWith("https://")) {
+      const parsedUrl = url.parse(data);
+      const baseName = parsedUrl.pathname
+        ? path.basename(parsedUrl.pathname)
+        : null;
+      if (baseName) {
+        const ext = path.extname(baseName);
+        if (ext === ".jpg" || ext === ".jpeg") {
+          return convertExternalImageUrlToBase64Url(data, "image/jpeg");
+        } else if (ext === ".png") {
+          return convertExternalImageUrlToBase64Url(data, "image/png");
+        }
+      }
     }
   }
 

@@ -14,14 +14,14 @@ import { fetchInstagramMedia } from "./@instagram-rapid-ai";
     console.error("Failed to fetch Instagram media: ", e);
   }
 
-  const browser = await Puppeteer.launch();
+  // const browser = await Puppeteer.launch();
 
-  // Scrap Instagram photos
-  try {
-    await fetchInstagramPhotos(browser);
-  } catch (e) {
-    console.error("Failed to fetch Instagram photos: ", e);
-  }
+  // // Scrap Instagram photos
+  // try {
+  //   await fetchInstagramPhotos(browser);
+  // } catch (e) {
+  //   console.error("Failed to fetch Instagram photos: ", e);
+  // }
 
-  await browser.close();
+  // await browser.close();
 })().catch(console.error);
