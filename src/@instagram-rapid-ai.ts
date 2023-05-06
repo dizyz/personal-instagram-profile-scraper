@@ -73,7 +73,6 @@ export function fetchProcessedInstagramPhotos(json: any): InstagramPhoto[] {
 export async function fetchInstagramMedia(): Promise<void> {
   let data = undefined;
   try {
-    throw new Error("by pass rapid api");
     const profileData = await getProfileData();
     const mediasData = await getMediaData();
     data = {
