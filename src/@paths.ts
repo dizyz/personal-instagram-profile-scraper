@@ -8,3 +8,7 @@ export const INSTAGRAM_RAPID_API_JSON_PATH = Path.resolve(
   PUBLIC_DIR,
   `instagram-rapid-api.json`
 );
+export const INSTAGRAM_PHOTOS_JSON_PATH = Path.resolve(
+  PUBLIC_DIR,
+  `instagram-photos.json`
+);

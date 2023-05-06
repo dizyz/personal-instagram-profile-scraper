@@ -9,9 +9,11 @@ import { fetchInstagramMedia } from "./@instagram-rapid-ai";
   await FS.ensureDir(PUBLIC_DIR);
 
   try {
+    console.log("Fetching Instagram photos...");
     await fetchInstagramMedia();
+    console.log("- Done.");
   } catch (e) {
-    console.error("Failed to fetch Instagram media: ", e);
+    console.error("- Failed to fetch Instagram media: ", e);
   }
 
   // const browser = await Puppeteer.launch();

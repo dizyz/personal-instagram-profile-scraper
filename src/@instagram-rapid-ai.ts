@@ -1,7 +1,10 @@
 import Axios from "axios";
 import * as FS from "fs-extra";
 import { RAPID_API_KEY } from "./@env";
-import { INSTAGRAM_RAPID_API_JSON_PATH } from "./@paths";
+import {
+  INSTAGRAM_PHOTOS_JSON_PATH,
+  INSTAGRAM_RAPID_API_JSON_PATH,
+} from "./@paths";
 import { convertImageUrlsInData } from "./@utils";
 
 const INSTAGRAM_USERNAME = "ziyang.io";
@@ -48,7 +51,26 @@ async function getMediaData() {
   return response.data;
 }
 
-export async function fetchInstagramMedia() {
+export interface InstagramPhoto {
+  timestamp: string;
+  link: string;
+  imageUrl: string;
+}
+
+export function fetchProcessedInstagramPhotos(json: any): InstagramPhoto[] {
+  return json.medias.data.user.edge_owner_to_timeline_media.edges
+    .filter((edge: any) => edge?.node?.__typename === "GraphImage")
+    .map((edge: any) => {
+      const node = edge.node;
+      return {
+        timestamp: node.taken_at_timestamp,
+        link: `https://www.instagram.com/p/${node.shortcode}/`,
+        imageUrl: node.thumbnail_src,
+      };
+    });
+}
+
+export async function fetchInstagramMedia(): Promise<void> {
   let data = undefined;
   try {
     throw new Error("by pass rapid api");
@@ -68,8 +90,14 @@ export async function fetchInstagramMedia() {
   }
 
   data = await convertImageUrlsInData(data);
-
   await FS.writeJSON(INSTAGRAM_RAPID_API_JSON_PATH, data, {
     spaces: 2,
   });
+
+  const processedPhotos = fetchProcessedInstagramPhotos(data);
+  await FS.writeJSON(INSTAGRAM_PHOTOS_JSON_PATH, processedPhotos, {
+    spaces: 2,
+  });
+
+  return data;
 }
