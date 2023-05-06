@@ -2,6 +2,7 @@ import Axios from "axios";
 import * as FS from "fs-extra";
 import { RAPID_API_KEY } from "./@env";
 import { INSTAGRAM_RAPID_API_JSON_PATH } from "./@paths";
+import { convertImageUrlsInData } from "./@utils";
 
 const INSTAGRAM_USERNAME = "ziyang.io";
 const INSTAGRAM_USER_ID = 56257652623;
@@ -64,6 +65,8 @@ export async function fetchInstagramMedia() {
     const response = await Axios.get(RAPID_API_JSON_URL);
     data = response.data;
   }
+
+  data = await convertImageUrlsInData(data);
 
   await FS.writeJSON(INSTAGRAM_RAPID_API_JSON_PATH, data, {
     spaces: 2,
