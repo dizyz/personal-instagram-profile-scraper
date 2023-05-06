@@ -1,4 +1,4 @@
-import fetch from "node-fetch";
+import fetch from "isomorphic-unfetch";
 
 export async function convertExternalImageUrlToBase64Url(
   externalUrl: string,

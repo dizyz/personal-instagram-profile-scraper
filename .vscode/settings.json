@@ -32,6 +32,7 @@
     "rapidapi",
     "smarklink",
     "SMARTLINK",
+    "unfetch",
     "UPSTASH"
   ],
   "[jsonc]": {
